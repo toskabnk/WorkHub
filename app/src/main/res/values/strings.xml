@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WorkHub</string>
+    <string name="listWorkplaces">Ver Workplaces</string>
+    <string name="listReservations">Ver reservas</string>
+    <string name="listFavourites">Favoritos</string>
+    <string name="adminButton">Administracion</string>
+    <string name="logoDescription">Logo</string>
 </resources>
