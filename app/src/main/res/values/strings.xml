@@ -5,4 +5,24 @@
     <string name="listFavourites">Favoritos</string>
     <string name="adminButton">Administracion</string>
     <string name="logoDescription">Logo</string>
+    <string name="loginUsername">Nombre de Usuario:</string>
+    <string name="loginPassword">Contraseña:</string>
+    <string name="loginForgot">He olvidado mi contraseña</string>
+    <string name="loginRegister">Crear cuenta</string>
+    <string name="loginButton">Acceder</string>
+    <string name="loginCheckbix">Recuerdame</string>
+    <string name="registerName">Nombre:</string>
+    <string name="registerSurname">Apellidos:</string>
+    <string name="registerUsername">Nombre de usuario:</string>
+    <string name="registerPhoneNumber">Telefono:</string>
+    <string name="registerAdmin">¿Admin?</string>
+    <string name="registerRegistrar">Registrar</string>
+    <string name="registerBack">Volver</string>
+    <string name="registerPassword">Contraseña:</string>
+    <string name="registerEmail">Correo Electronico:</string>
+    <string name="errorRegister">Ha ocurrido un error. Intenta de nuevo</string>
+    <string name="correctRegister">Registrado con exito!</string>
+    <string name="loginCorrect">Login Correcto</string>
+    <string name="loginIncorrect">Login Incorrecto</string>
+    <string name="a"></string>
 </resources>
