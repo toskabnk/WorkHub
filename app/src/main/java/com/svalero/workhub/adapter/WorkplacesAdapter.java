@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.svalero.workhub.DetailWorkplace;
 import com.svalero.workhub.R;
 import com.svalero.workhub.RegisterWorkplace;
 import com.svalero.workhub.db.WorkHubDatabase;
@@ -82,6 +83,13 @@ public class WorkplacesAdapter extends RecyclerView.Adapter<WorkplacesAdapter.Su
 
     public void seeWorkplaceDetails(int position){
         WorkPlace workPlace = workplaces.get(position);
+        Intent intent = new Intent(context, DetailWorkplace.class);
+        String username = intentFrom.getStringExtra("username");
+        Long userID = intentFrom.getLongExtra("userID", 0L);
+        intent.putExtra("username", username);
+        intent.putExtra("userID", userID);
+        intent.putExtra("workplace", workPlace);
+        context.startActivity(intent);
     }
 
     public void editWorkplace(int position){

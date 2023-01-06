@@ -41,5 +41,9 @@
     <string name="removeWorkplaceMessage">Eliminar Workplace</string>
     <string name="confirmationYes">Si</string>
     <string name="confirmationNo">No</string>
+    <string name="menuDetailsWorkspace">Añadir Espacio</string>
+    <string name="detailsWorkplacePhone">Numero de Telefono:</string>
+    <string name="detailsWorkplaceLocation">Localizacion:</string>
+    <string name="detailsWorkplaceSchedule">Horario:</string>
     <string name="a"></string>
 </resources>
