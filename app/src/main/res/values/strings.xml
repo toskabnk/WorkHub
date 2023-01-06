@@ -45,5 +45,11 @@
     <string name="detailsWorkplacePhone">Numero de Telefono:</string>
     <string name="detailsWorkplaceLocation">Localizacion:</string>
     <string name="detailsWorkplaceSchedule">Horario:</string>
+    <string name="spaceItemReserve">Reservar</string>
+    <string name="spaceItemDeleteMessage">Eliminar Espacio</string>
+    <string name="spaceRegisterName">Nombre del Espacio: </string>
+    <string name="spaceRegisterDesciption">Descripcion del Espacio:</string>
+    <string name="spaceRegisterServices">Servicios disponibles:</string>
+    <string name="spaceRegisterDessignedWorkplace">Workplace asignado:</string>
     <string name="a"></string>
 </resources>

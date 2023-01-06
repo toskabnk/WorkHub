@@ -1,14 +1,27 @@
 package com.svalero.workhub;
 
+import static com.svalero.workhub.db.Constants.DATABASE_NAME;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.svalero.workhub.adapter.SpacesAdapter;
+import com.svalero.workhub.db.WorkHubDatabase;
+import com.svalero.workhub.domain.Space;
+import com.svalero.workhub.domain.User;
 import com.svalero.workhub.domain.WorkPlace;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailWorkplace extends AppCompatActivity {
@@ -16,6 +29,9 @@ public class DetailWorkplace extends AppCompatActivity {
     private String username;
     private Long userID;
     private WorkPlace workplace;
+    private List<Space> spaces;
+    private SpacesAdapter adapter;
+    private Boolean admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +49,50 @@ public class DetailWorkplace extends AppCompatActivity {
         } else {
             return;
         }
+
+        spaces = new ArrayList<>();
+
+        //Conseguir si el usuario es admin de la base de datos
+        final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+        try{
+            User user = db.getUserDAO().getById(userID);
+            admin = user.getAdmin();
+        } catch (SQLiteConstraintException sce){
+
+        }
+
+        //RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.rvSpaces);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new SpacesAdapter(this, spaces, intentFrom, admin, workplace);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void onResume(){
+        super.onResume();
+        spaces.clear();
+        final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+        spaces.addAll(db.getSpaceDAO().getSpacesByWorklace(workplace.getId()));
+        adapter.notifyDataSetChanged();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_details_workplace, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.addSpace){
+            Intent intent = new Intent(this, RegisterSpace.class);
+            intent.putExtra("userID", userID);
+            intent.putExtra("username", username);
+            intent.putExtra("workplace", workplace);
+            startActivity(intent);
+            return true;
+        }
+        return false;
     }
 
     private void fillData(WorkPlace workPlace){

@@ -88,6 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/detailsWorkplaceSchedule">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSpaces"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"

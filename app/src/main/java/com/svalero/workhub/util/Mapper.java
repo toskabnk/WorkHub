@@ -1,7 +1,9 @@
 package com.svalero.workhub.util;
 
+import com.svalero.workhub.domain.Space;
 import com.svalero.workhub.domain.User;
 import com.svalero.workhub.domain.WorkPlace;
+import com.svalero.workhub.domain.dto.SpaceDTO;
 import com.svalero.workhub.domain.dto.UserDTO;
 import com.svalero.workhub.domain.dto.WorkPlaceDTO;
 
@@ -27,5 +29,14 @@ public class Mapper {
         workPlace.setAddress(workPlaceDTO.getAddress());
         workPlace.setSchedule(workPlaceDTO.getSchedule());
         return workPlace;
+    }
+
+    public static Space spaceMapper(SpaceDTO spaceDTO){
+        Space space = new Space();
+        space.setName(spaceDTO.getName());
+        space.setDescription(spaceDTO.getDescription());
+        space.setServices(spaceDTO.getServices());
+        space.setWorkplace(spaceDTO.getWorkplace());
+        return space;
     }
 }

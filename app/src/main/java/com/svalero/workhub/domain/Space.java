@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity(foreignKeys = {
         @ForeignKey(entity = WorkPlace.class, parentColumns = "id", childColumns = "workplace", onDelete = CASCADE)
 })
-public class Space {
+public class Space implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String name;
