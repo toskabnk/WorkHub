@@ -22,6 +22,7 @@ public class WorkPlace implements Serializable {
     private String city;
     private String address;
     private String schedule;
+    private String filePath;
     private double latitude;
     private double longitude;
 }

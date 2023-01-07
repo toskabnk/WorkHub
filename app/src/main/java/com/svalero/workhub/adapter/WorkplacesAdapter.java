@@ -5,10 +5,12 @@ import static com.svalero.workhub.db.Constants.DATABASE_NAME;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -19,6 +21,7 @@ import com.svalero.workhub.RegisterWorkplace;
 import com.svalero.workhub.db.WorkHubDatabase;
 import com.svalero.workhub.domain.WorkPlace;
 
+import java.io.File;
 import java.util.List;
 
 public class WorkplacesAdapter extends RecyclerView.Adapter<WorkplacesAdapter.SuperheroHolder> {
@@ -45,6 +48,8 @@ public class WorkplacesAdapter extends RecyclerView.Adapter<WorkplacesAdapter.Su
     public void onBindViewHolder(SuperheroHolder holder, int position) {
         holder.name.setText(workplaces.get(position).getName());
         holder.description.setText(workplaces.get(position).getDescription());
+        Uri imageUri = Uri.fromFile(new File(workplaces.get(position).getFilePath()));
+        holder.image.setImageURI(imageUri);
     }
 
     @Override
@@ -58,6 +63,7 @@ public class WorkplacesAdapter extends RecyclerView.Adapter<WorkplacesAdapter.Su
         public Button details;
         public Button delete;
         public Button edit;
+        public ImageView image;
         public View parenView;
 
         public SuperheroHolder(View view){
@@ -68,6 +74,7 @@ public class WorkplacesAdapter extends RecyclerView.Adapter<WorkplacesAdapter.Su
             details = view.findViewById(R.id.bListDetails);
             edit = view.findViewById(R.id.bListEdit);
             delete = view.findViewById(R.id.bListDelete);
+            image = view.findViewById(R.id.ivListDetailsImage);
 
             if(!admin){
                 edit.setVisibility(View.GONE);

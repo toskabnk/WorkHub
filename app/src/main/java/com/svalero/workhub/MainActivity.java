@@ -1,8 +1,12 @@
 package com.svalero.workhub;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -21,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        checkExternalStoragePermission();
+
         loggerUser = findViewById(R.id.loggerUser);
 
         //Conseguir usuario logueado
@@ -63,5 +70,15 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("username", username);
             startActivity(intent);
         });
+    }
+
+    private void checkExternalStoragePermission() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},225);
+            }
+        }
     }
 }
