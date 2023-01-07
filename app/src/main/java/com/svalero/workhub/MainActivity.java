@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button button;
     private Button button2;
+    private Button bDetailUser;
     private TextView loggerUser;
     private String username;
     private Long userID;
@@ -51,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
         button2 = findViewById(R.id.listReservations);
         button2.setOnClickListener(view -> {
             Intent intent = new Intent(this, ListReserves.class);
+            intent.putExtra("userID", userID);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
+
+        bDetailUser = findViewById(R.id.listUserDetail);
+        bDetailUser.setOnClickListener(view -> {
+            Intent intent = new Intent(this, DetailUser.class);
             intent.putExtra("userID", userID);
             intent.putExtra("username", username);
             startActivity(intent);

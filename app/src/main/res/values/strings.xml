@@ -3,6 +3,7 @@
     <string name="listWorkplaces">Ver Workplaces</string>
     <string name="listReservations">Ver reservas</string>
     <string name="listFavourites">Favoritos</string>
+    <string name="listDetailUser">Mi Usuario</string>
     <string name="adminButton">Administracion</string>
     <string name="logoDescription">Logo</string>
     <string name="loginUsername">Nombre de Usuario:</string>
@@ -54,5 +55,7 @@
     <string name="reserveRegisterSpace">Espacio escogido:</string>
     <string name="reserveRegisterDate">Fecha para la reserva:</string>
     <string name="reserveDeleteMessage">Eliminar Reserva</string>
+    <string name="logout">Cerrar sesion</string>
+    <string name="logoutMessage">Cerrando sesion</string>
     <string name="a"></string>
 </resources>

@@ -31,13 +31,13 @@
         app:layout_constraintTop_toBottomOf="@+id/listWorkplaces" />
 
     <Button
-        android:id="@+id/listFavourites"
+        android:id="@+id/listUserDetail"
         android:layout_width="0dp"
         android:layout_height="81dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
-        android:text="@string/listFavourites"
+        android:text="@string/listDetailUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listReservations" />
@@ -52,7 +52,7 @@
         android:text="@string/adminButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listFavourites" />
+        app:layout_constraintTop_toBottomOf="@+id/listUserDetail" />
 
     <ImageView
         android:id="@+id/imageView"
