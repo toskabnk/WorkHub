@@ -51,5 +51,8 @@
     <string name="spaceRegisterDesciption">Descripcion del Espacio:</string>
     <string name="spaceRegisterServices">Servicios disponibles:</string>
     <string name="spaceRegisterDessignedWorkplace">Workplace asignado:</string>
+    <string name="reserveRegisterSpace">Espacio escogido:</string>
+    <string name="reserveRegisterDate">Fecha para la reserva:</string>
+    <string name="reserveDeleteMessage">Eliminar Reserva</string>
     <string name="a"></string>
 </resources>

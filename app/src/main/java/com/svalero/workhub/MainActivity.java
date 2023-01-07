@@ -50,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
         //Test Login
         button2 = findViewById(R.id.listReservations);
         button2.setOnClickListener(view -> {
-            //Intent intent = new Intent(MainActivity.this, Login.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, ListReserves.class);
+            intent.putExtra("userID", userID);
+            intent.putExtra("username", username);
+            startActivity(intent);
         });
     }
 }

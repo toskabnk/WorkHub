@@ -1,8 +1,11 @@
 package com.svalero.workhub.util;
 
+import com.svalero.workhub.R;
+import com.svalero.workhub.domain.Reserve;
 import com.svalero.workhub.domain.Space;
 import com.svalero.workhub.domain.User;
 import com.svalero.workhub.domain.WorkPlace;
+import com.svalero.workhub.domain.dto.ReserveDTO;
 import com.svalero.workhub.domain.dto.SpaceDTO;
 import com.svalero.workhub.domain.dto.UserDTO;
 import com.svalero.workhub.domain.dto.WorkPlaceDTO;
@@ -38,5 +41,13 @@ public class Mapper {
         space.setServices(spaceDTO.getServices());
         space.setWorkplace(spaceDTO.getWorkplace());
         return space;
+    }
+
+    public static  Reserve reserveMapper(ReserveDTO reserveDTO){
+        Reserve reserve = new Reserve();
+        reserve.setId_space(reserveDTO.getId_space());
+        reserve.setId_user(reserveDTO.getId_user());
+        reserve.setDate(reserveDTO.getDate());
+        return reserve;
     }
 }

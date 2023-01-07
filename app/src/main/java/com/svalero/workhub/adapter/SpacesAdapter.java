@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.svalero.workhub.R;
+import com.svalero.workhub.RegisterReserve;
 import com.svalero.workhub.RegisterSpace;
 import com.svalero.workhub.RegisterWorkplace;
 import com.svalero.workhub.db.WorkHubDatabase;
@@ -91,8 +92,7 @@ public class SpacesAdapter extends RecyclerView.Adapter<SpacesAdapter.SuperheroH
 
     public void reserveSpace(int position){
         Space space = spaces.get(position);
-        /*
-        Intent intent = new Intent(context, ReserveSpace.class);
+        Intent intent = new Intent(context, RegisterReserve.class);
         String username = intentFrom.getStringExtra("username");
         Long userID = intentFrom.getLongExtra("userID", 0L);
         intent.putExtra("username", username);
@@ -100,7 +100,6 @@ public class SpacesAdapter extends RecyclerView.Adapter<SpacesAdapter.SuperheroH
         intent.putExtra("workplace", workPlace);
         intent.putExtra("space", space);
         context.startActivity(intent);
-        */
     }
 
     public void editSpace(int position){

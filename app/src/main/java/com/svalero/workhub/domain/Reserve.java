@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.svalero.workhub.util.DateConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
         @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "id_user", onDelete = CASCADE),
         @ForeignKey(entity = Space.class, parentColumns = "id", childColumns = "id_space", onDelete = CASCADE)
 })
-public class Reserve {
+public class Reserve implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private long id_user;
