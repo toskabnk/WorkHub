@@ -51,7 +51,13 @@ public class RegisterWorkplace extends AppCompatActivity {
     private EditText etSchedule;
     private Button button;
     private Bitmap imageBitmap;
+    private ImageView imageView;
+    private double latitude;
+    private double longitude;
+    private boolean mapOK = false;
+    private boolean imageOK = false;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_MAP_CAPTURE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,7 @@ public class RegisterWorkplace extends AppCompatActivity {
         etAddress = findViewById(R.id.registerWorkplaceAddress);
         etSchedule = findViewById(R.id.registerWorkplaceSchedule);
         button = findViewById(R.id.registerWorkplaceRegister);
+        imageView = findViewById(R.id.workplacePhoto);
 
         if(workPlaceEdit != null){
             etName.setText(workPlaceEdit.getName());
@@ -85,6 +92,8 @@ public class RegisterWorkplace extends AppCompatActivity {
             etAddress.setText(workPlaceEdit.getAddress());
             etSchedule.setText(workPlaceEdit.getSchedule());
             button.setText(R.string.registerEdit);
+            Uri imageUri = Uri.fromFile(new File(workPlaceEdit.getFilePath()));
+            imageView.setImageURI(imageUri);
         }
     }
 
@@ -110,15 +119,27 @@ public class RegisterWorkplace extends AppCompatActivity {
         File imageFile = new File(storageDir, System.currentTimeMillis() + ".jpg");
         Log.i("RegisterWorkplace", "register - filePath: " + imageFile);
 
-        //Guardamos el archivo en el almacenamiento
-        saveBitmapToFile(imageBitmap, imageFile);
-
         if(workPlaceEdit != null){
 
             workplace.setId(workPlaceEdit.getId());
 
             final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
             try{
+                if(imageOK){
+                    //Guardamos el archivo en el almacenamiento
+                    saveBitmapToFile(imageBitmap, imageFile);
+                    workplace.setFilePath(imageFile.toString());
+                } else {
+                    workplace.setFilePath(workPlaceEdit.getFilePath());
+                }
+                if(mapOK){
+                    //Escribimos la latitud y longitud
+                    workplace.setLatitude(latitude);
+                    workplace.setLongitude(longitude);
+                } else {
+                    workplace.setLatitude(workPlaceEdit.getLatitude());
+                    workplace.setLongitude(workPlaceEdit.getLongitude());
+                }
                 db.getWorkPlaceDAO().update(workplace);
                 Toast.makeText(this, R.string.correctEdit, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, ListWorkplaces.class);
@@ -133,13 +154,30 @@ public class RegisterWorkplace extends AppCompatActivity {
 
             final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
             try {
-                workplace.setFilePath(imageFile.toString());
-                db.getWorkPlaceDAO().insert(workplace);
-                Toast.makeText(this, R.string.correctRegister, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, ListWorkplaces.class);
-                intent.putExtra("userID", userID);
-                intent.putExtra("username", username);
-                startActivity(intent);
+                if(imageOK && mapOK) {
+
+                    //Guardamos el archivo en el almacenamiento
+                    saveBitmapToFile(imageBitmap, imageFile);
+                    workplace.setFilePath(imageFile.toString());
+
+                    //Escribimos la latitud y longitud
+                    workplace.setLatitude(latitude);
+                    workplace.setLongitude(longitude);
+
+                    db.getWorkPlaceDAO().insert(workplace);
+                    Toast.makeText(this, R.string.correctRegister, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(this, ListWorkplaces.class);
+                    intent.putExtra("userID", userID);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                } else {
+                    if(!mapOK){
+                        Toast.makeText(this, R.string.mapMessage, Toast.LENGTH_LONG).show();
+                    }
+                    if(!imageOK){
+                        Toast.makeText(this, R.string.photoMessage, Toast.LENGTH_LONG).show();
+                    }
+                }
             } catch (SQLiteConstraintException sce) {
                 Snackbar.make(etName, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
             }
@@ -160,6 +198,11 @@ public class RegisterWorkplace extends AppCompatActivity {
         }
     }
 
+    public void registerMap(View view){
+        Intent intentMap = new Intent(this, SelectMap.class);
+        startActivityForResult(intentMap, REQUEST_MAP_CAPTURE);
+    }
+
     private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
@@ -176,9 +219,20 @@ public class RegisterWorkplace extends AppCompatActivity {
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
 
-            // Asigna el Bitmap al ImageView
-            ImageView imageView = findViewById(R.id.workplacePhoto);
             imageView.setImageBitmap(imageBitmap);
+            imageOK = true;
+        }
+        if(requestCode == REQUEST_MAP_CAPTURE && resultCode == RESULT_OK){
+            latitude = data.getDoubleExtra("latitude", 0.);
+            longitude = data.getDoubleExtra("longitude", 0.);
+            Log.i("RegisterWorkplace", "onActivityResult - latitude: " + latitude);
+            Log.i("RegisterWorkplace", "onActivityResult - longitude: " + longitude);
+            Toast.makeText(this, R.string.registerWorkplaceMapOK, Toast.LENGTH_LONG).show();
+            mapOK = true;
+        }
+
+        if(requestCode == REQUEST_MAP_CAPTURE && resultCode == RESULT_CANCELED){
+            Toast.makeText(this, R.string.registerWorkplaceMapNO, Toast.LENGTH_LONG).show();
         }
     }
 

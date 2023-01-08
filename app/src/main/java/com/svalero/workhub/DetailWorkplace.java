@@ -10,6 +10,7 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +61,8 @@ public class DetailWorkplace extends AppCompatActivity {
         } catch (SQLiteConstraintException sce){
 
         }
+
+        Log.i("DetailWorkplace", "onCreate - Workplace: " + workplace.toString());
 
         //RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvSpaces);
@@ -115,6 +118,14 @@ public class DetailWorkplace extends AppCompatActivity {
         Intent intent = new Intent(this, ListWorkplaces.class);
         intent.putExtra("userID", userID);
         intent.putExtra("username", username);
+        startActivity(intent);
+    }
+
+    public void seeMap(View view){
+        Intent intent = new Intent(this, WorkplaceDetailMap.class);
+        intent.putExtra("userID", userID);
+        intent.putExtra("username", username);
+        intent.putExtra("workplace", workplace);
         startActivity(intent);
     }
 }

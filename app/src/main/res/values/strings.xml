@@ -57,5 +57,13 @@
     <string name="reserveDeleteMessage">Eliminar Reserva</string>
     <string name="logout">Cerrar sesion</string>
     <string name="logoutMessage">Cerrando sesion</string>
+    <string name="makePhoto">Hacer foto</string>
+    <string name="mapSave">Guardar</string>
+    <string name="mapDelete">Restablecer</string>
+    <string name="mapMessage">Por favor, selecciona un punto del mapa</string>
+    <string name="photoMessage">Por favor, selecciona una foto</string>
+    <string name="seeWorkplaceMap">Ver en mapa</string>
+    <string name="registerWorkplaceMapOK">Ubicacion conseguida con exito!</string>
+    <string name="registerWorkplaceMapNO">Ubicacion cancelada</string>
     <string name="a"></string>
 </resources>

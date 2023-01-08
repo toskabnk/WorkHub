@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private Button button2;
     private Button bDetailUser;
+    private Button bAdministration;
     private TextView loggerUser;
     private String username;
     private Long userID;
@@ -69,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("userID", userID);
             intent.putExtra("username", username);
             startActivity(intent);
+        });
+
+        bAdministration = findViewById(R.id.administration);
+        bAdministration.setOnClickListener(view -> {
+            //Intent intent = new Intent(this, TestMap.class);
+            //intent.putExtra("userID", userID);
+            //intent.putExtra("username", username);
+            //startActivity(intent);
         });
     }
 

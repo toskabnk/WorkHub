@@ -80,12 +80,22 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
+            <Button
+                android:id="@+id/detailsWorkplaceMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="seeMap"
+                android:text="@string/seeWorkplaceMap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detailsWorkplaceSchedule" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/button3"
-                app:layout_constraintTop_toBottomOf="@+id/detailsWorkplaceSchedule">
+                app:layout_constraintTop_toBottomOf="@+id/detailsWorkplaceMap">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvSpaces"
