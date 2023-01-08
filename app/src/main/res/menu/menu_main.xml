@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuWorkplaces"
+        android:title="@string/mainMenuList" />
+    <item
+        android:id="@+id/menuReserves"
+        android:title="@string/mainMenuReserve" />
+    <item
+        android:id="@+id/menuUser"
+        android:title="@string/mainMenuUser" />
+    <item
+        android:id="@+id/menuSettings"
+        android:title="@string/mainMenuSettings" />
+    <item
+        android:id="@+id/menuLogout"
+        android:title="@string/mainMenuLogout" />
+</menu>
