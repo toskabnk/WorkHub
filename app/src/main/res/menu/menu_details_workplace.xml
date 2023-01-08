@@ -4,7 +4,6 @@
 
     <item
         android:id="@+id/addSpace"
-        android:icon="@android:drawable/ic_input_add"
         android:title="@string/menuDetailsWorkspace"
         app:showAsAction="always" />
 </menu>

@@ -66,5 +66,10 @@
     <string name="seeWorkplaceMap">Ver en mapa</string>
     <string name="registerWorkplaceMapOK">Ubicacion conseguida con exito!</string>
     <string name="registerWorkplaceMapNO">Ubicacion cancelada</string>
+    <string name="mainMenuList">Workplaces</string>
+    <string name="mainMenuReserve">Reservas</string>
+    <string name="mainMenuUser">Usuario</string>
+    <string name="mainMenuSettings">Opciones</string>
+    <string name="mainMenuLogout">Cerrar Sesion</string>
     <string name="a"></string>
 </resources>

@@ -4,7 +4,6 @@
 
     <item
         android:id="@+id/addWorkplace"
-        android:icon="@android:drawable/ic_input_add"
         android:title="@string/menuWorkplacesAdd"
         app:showAsAction="always" />
 </menu>
