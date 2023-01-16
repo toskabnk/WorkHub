@@ -56,6 +56,8 @@ public class RegisterUser extends AppCompatActivity {
             startActivity(intent);
         } catch (SQLiteConstraintException sce){
             Snackbar.make(etName, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
+        } finally {
+            db.close();
         }
     }
 

@@ -63,6 +63,8 @@ public class ListWorkplaces extends AppCompatActivity {
             admin = user.getAdmin();
         } catch (SQLiteConstraintException sce){
 
+        } finally {
+            db.close();
         }
 
 

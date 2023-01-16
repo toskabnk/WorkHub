@@ -110,6 +110,8 @@ public class RegisterReserve extends AppCompatActivity {
                 startActivity(intent);
             } catch (SQLiteConstraintException sce) {
                 Snackbar.make(etDate, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
+            } finally {
+                db.close();
             }
         }
     }

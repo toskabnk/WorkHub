@@ -80,6 +80,8 @@ public class RegisterSpace extends AppCompatActivity {
                 startActivity(intent);
             } catch (SQLiteConstraintException sce) {
                 Snackbar.make(etName, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
+            } finally {
+                db.close();
             }
 
         } else {
@@ -93,6 +95,8 @@ public class RegisterSpace extends AppCompatActivity {
                 startActivity(intent);
             } catch (SQLiteConstraintException sce) {
                 Snackbar.make(etName, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
+            } finally {
+                db.close();
             }
         }
     }

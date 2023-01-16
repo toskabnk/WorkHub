@@ -55,6 +55,8 @@ public class ListReserves extends AppCompatActivity {
             admin = user.getAdmin();
         } catch (SQLiteConstraintException sce){
 
+        } finally {
+            db.close();
         }
 
         //RV
