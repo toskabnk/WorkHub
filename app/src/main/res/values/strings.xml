@@ -78,5 +78,6 @@
     <string name="settingsError">Error saving preferences!</string>
     <string name="autoLogin">Autologin correct!</string>
     <string name="autoLoginError">Error at autologin!</string>
+    <string name="cameraError">Error opening the camera!</string>
     <string name="a"></string>
 </resources>

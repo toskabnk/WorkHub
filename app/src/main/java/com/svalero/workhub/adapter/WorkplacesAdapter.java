@@ -48,8 +48,10 @@ public class WorkplacesAdapter extends RecyclerView.Adapter<WorkplacesAdapter.Su
     public void onBindViewHolder(SuperheroHolder holder, int position) {
         holder.name.setText(workplaces.get(position).getName());
         holder.description.setText(workplaces.get(position).getDescription());
-        Uri imageUri = Uri.fromFile(new File(workplaces.get(position).getFilePath()));
-        holder.image.setImageURI(imageUri);
+        if(workplaces.get(position).getFilePath() != null) {
+            Uri imageUri = Uri.fromFile(new File(workplaces.get(position).getFilePath()));
+            holder.image.setImageURI(imageUri);
+        }
     }
 
     @Override

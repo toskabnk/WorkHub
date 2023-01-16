@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -195,10 +196,13 @@ public class RegisterWorkplace extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void makePhoto(View view) {
+    public void makePhoto(View view){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+        try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.cameraError, Toast.LENGTH_LONG).show();
+            mapOK = true;
         }
     }
 

@@ -79,5 +79,6 @@
     <string name="settingsError">Error guardando las preferencias!</string>
     <string name="autoLogin">Autologin correcto!</string>
     <string name="autoLoginError">Error al iniciar sesion automaticamente</string>
+    <string name="cameraError">Error abriendo la camara!</string>
     <string name="a"></string>
 </resources>
