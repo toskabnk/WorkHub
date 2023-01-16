@@ -70,5 +70,6 @@
     <string name="mainMenuUser">User</string>
     <string name="mainMenuSettings">Settings</string>
     <string name="mainMenuLogout">Logout</string>
+    <string name="gpsMe">Me</string>
     <string name="a"></string>
 </resources>

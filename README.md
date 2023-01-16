@@ -23,9 +23,9 @@
 ### Requisitos opcionales
 - [x] Utilizar diálogos siempre que sea necesario (al modificar o eliminar información, por ejemplo)
 - [x] Utiliza la herramienta Git (y GitHub) durante todo el desarrollo de la aplicación. Utiliza el gestor de Issues para los problemas/fallos que vayan surgiendo
-- [ ] Utilizar el GPS del dispositivo para realizar alguna función sobre el mapa
+- [x] Utilizar el GPS del dispositivo para realizar alguna función sobre el mapa
 - [ ] Añadir un menú de preferencias con al menos 3 opciones que modifiquen el comportamiento de la aplicación. Este menú estará siempre disponible en el ActionBar
 - [ ] Diseñar algunos layouts para otras posiciones de la pantalla (portrait/landscape)
 - [x] Utilizar imágenes como atributos de algún objeto (y almacenarlo en la base de datos)
-- [x] ¿Si? Emplear Fragments en el diseño de alguna de las Activities de la aplicación
+- [ ] Emplear Fragments en el diseño de alguna de las Activities de la aplicación
 - [ ] Utilizar Material Design para personalizar el diseño de la aplicación

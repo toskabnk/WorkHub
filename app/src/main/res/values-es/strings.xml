@@ -71,5 +71,6 @@
     <string name="mainMenuUser">Usuario</string>
     <string name="mainMenuSettings">Opciones</string>
     <string name="mainMenuLogout">Cerrar Sesion</string>
+    <string name="gpsMe">Yo</string>
     <string name="a"></string>
 </resources>

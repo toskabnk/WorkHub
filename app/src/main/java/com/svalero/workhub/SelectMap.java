@@ -3,13 +3,19 @@ package com.svalero.workhub;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.mapbox.geojson.Point;
+import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.plugin.annotation.AnnotationConfig;
@@ -26,9 +32,12 @@ public class SelectMap extends AppCompatActivity implements Style.OnStyleLoaded 
     private MapView mapView;
     private PointAnnotationManager pointAnnotationManager;
     private Point point;
+    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        gps();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_map);
         mapView = findViewById(R.id.mapView);
@@ -87,5 +96,26 @@ public class SelectMap extends AppCompatActivity implements Style.OnStyleLoaded 
 
     public void removeMarkers(View view){
         removeAllMarkers();
+    }
+
+    @SuppressLint("MissingPermission")
+    private void gps() {
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            // Got last known location. In some rare situations this can be null.
+            if (location != null) {
+                // Logic to handle location object
+                setCameraPosition(location.getLatitude(), location.getLongitude());
+            }
+        });
+    }
+
+    private void setCameraPosition(double latitude, double longitude) {
+        CameraOptions cameraPosition = new CameraOptions.Builder()
+                .center(Point.fromLngLat(longitude, latitude))
+                .pitch(45.0)
+                .zoom(15.5)
+                .bearing(-17.6)
+                .build();
+        mapView.getMapboxMap().setCamera(cameraPosition);
     }
 }
