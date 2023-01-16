@@ -70,5 +70,13 @@
     <string name="mainMenuUser">User</string>
     <string name="mainMenuSettings">Settings</string>
     <string name="mainMenuLogout">Logout</string>
+    <string name="gpsMe">Me</string>
+    <string name="preferences1">Remember me</string>
+    <string name="preferences2">Place auto marker</string>
+    <string name="preferences3">MapDetails center on me</string>
+    <string name="settingsSaved">Preferences saved!</string>
+    <string name="settingsError">Error saving preferences!</string>
+    <string name="autoLogin">Autologin correct!</string>
+    <string name="autoLoginError">Error at autologin!</string>
     <string name="a"></string>
 </resources>

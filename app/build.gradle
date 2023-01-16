@@ -44,4 +44,5 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.4.3"
     //Mapbox
     implementation 'com.mapbox.maps:android:10.10.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }
