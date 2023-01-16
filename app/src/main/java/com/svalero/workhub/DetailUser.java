@@ -55,6 +55,8 @@ public class DetailUser extends AppCompatActivity {
             user = db.getUserDAO().getById(userID);
         } catch (SQLiteConstraintException sce){
             Snackbar.make(tvName, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
+        } finally {
+            db.close();
         }
 
         Log.i("DetailUser", "onCreate - User: " + user.toString());
@@ -105,6 +107,8 @@ public class DetailUser extends AppCompatActivity {
             Toast.makeText(this, R.string.correctEdit, Toast.LENGTH_LONG).show();
         } catch (SQLiteConstraintException sce) {
             Snackbar.make(tvName, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
+        } finally {
+            db1.close();
         }
     }
 

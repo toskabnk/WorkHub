@@ -62,6 +62,8 @@ public class DetailWorkplace extends AppCompatActivity {
             admin = user.getAdmin();
         } catch (SQLiteConstraintException sce){
 
+        } finally {
+            db.close();
         }
 
         Log.i("DetailWorkplace", "onCreate - Workplace: " + workplace.toString());

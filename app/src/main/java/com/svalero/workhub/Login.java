@@ -37,30 +37,27 @@ public class Login extends AppCompatActivity {
 
         try{
             preference = db.getPreferenceDAO().getPreference();
-        } catch (SQLiteConstraintException sce) {
-            Log.i("Login" , "onCreate - Error");
-        }
-
-        if(preference != null){
-            if(preference.isRememberMe()){
-                String username = preference.getUsername();
-                String password = preference.getPassword();
-                User user = db.getUserDAO().login(username, password);
-                if(user != null){
-                    Toast.makeText(this, R.string.autoLogin, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    intent.putExtra("userID", user.getId());
-                    intent.putExtra("username", user.getUsername());
-                    startActivity(intent);
-                } else {
-                    Snackbar.make(etUsernmae, R.string.autoLoginError, BaseTransientBottomBar.LENGTH_LONG).show();
+            if(preference != null){
+                if(preference.isRememberMe()){
+                    String username = preference.getUsername();
+                    String password = preference.getPassword();
+                    User user = db.getUserDAO().login(username, password);
+                    if(user != null){
+                        Toast.makeText(this, R.string.autoLogin, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Login.this, MainActivity.class);
+                        intent.putExtra("userID", user.getId());
+                        intent.putExtra("username", user.getUsername());
+                        startActivity(intent);
+                    } else {
+                        Snackbar.make(etUsernmae, R.string.autoLoginError, BaseTransientBottomBar.LENGTH_LONG).show();
+                    }
                 }
             }
+        } catch (SQLiteConstraintException sce) {
+            Log.i("Login" , "onCreate - Error");
+        } finally {
+            db.close();
         }
-
-        db.close();
-
-
     }
 
     public void login(View view){
@@ -83,6 +80,8 @@ public class Login extends AppCompatActivity {
             }
         } catch (SQLiteConstraintException sce){
             Snackbar.make(etUsernmae, R.string.errorRegister, BaseTransientBottomBar.LENGTH_LONG).show();
+        } finally {
+            db.close();
         }
     }
 
