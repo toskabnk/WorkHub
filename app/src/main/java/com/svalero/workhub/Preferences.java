@@ -4,8 +4,6 @@ import static com.svalero.workhub.db.Constants.DATABASE_NAME;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.app.AlertDialog;
@@ -16,66 +14,81 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 
-import com.svalero.workhub.adapter.ReservesAdapter;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.svalero.workhub.db.WorkHubDatabase;
-import com.svalero.workhub.domain.Reserve;
+import com.svalero.workhub.domain.Preference;
 import com.svalero.workhub.domain.User;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Preferences extends AppCompatActivity {
 
-public class ListReserves extends AppCompatActivity {
-
-    private List<Reserve> reserves;
-    private ReservesAdapter adapter;
+    private CheckBox defaultRememberMe;
+    private CheckBox defaultautoPlaceMarker;
+    private CheckBox defaultDetailCenterMe;
+    private Preference preference;
     private String username;
     private Long userID;
-    private boolean admin;
+    private MenuItem settingMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_reserves);
+        setContentView(R.layout.activity_preference);
 
         //Conseguir usuario logueado
         Intent intentFrom = getIntent();
         username = intentFrom.getStringExtra("username");
         userID = intentFrom.getLongExtra("userID", 0L);
 
-        Log.i("ListWorkplaces", "ListWorkplaces - Intent Username: " + username);
-        Log.i("ListWorkplaces", "ListWorkplaces - Intent userID: " + userID);
-
-        reserves = new ArrayList<>();
-
-        //Conseguir si el usuario es admin de la base de datos
         final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-        try{
-            User user = db.getUserDAO().getById(userID);
-            admin = user.getAdmin();
-        } catch (SQLiteConstraintException sce){
 
+        try{
+            preference = db.getPreferenceDAO().getPreference();
+            Log.i("Prefences - onCreate" , "Preferencias cargadas!");
+        } catch (SQLiteConstraintException sce) {
+            Log.i("Prefences - onCreate" , "No hay preferencias");
+            return;
+        } finally {
+            db.close();
         }
 
-        //RV
-        RecyclerView recyclerView = findViewById(R.id.rvListReservers);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ReservesAdapter(this, reserves, intentFrom, admin);
-        recyclerView.setAdapter(adapter);
+        defaultRememberMe = findViewById(R.id.defaultRememberMe);
+        defaultautoPlaceMarker = findViewById(R.id.defaultautoPlaceMarker);
+        defaultDetailCenterMe = findViewById(R.id.defaultDetailCenterMe);
+
+        defaultautoPlaceMarker.setChecked(preference.isAutoPlaceMarker());
+        defaultRememberMe.setChecked(preference.isRememberMe());
+        defaultDetailCenterMe.setChecked(preference.isMapDetailCenterMe());
     }
 
-    public void onResume(){
-        super.onResume();
-        reserves.clear();
+    public void save(View view){
         final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-        if(admin){
-            reserves.addAll(db.getReserveDAO().getAll());
-        } else {
-            reserves.addAll(db.getReserveDAO().getReserveByUser(userID));
+
+        Preference newPreference = new Preference();
+        newPreference.setId(preference.getId());
+        newPreference.setAutoPlaceMarker(defaultautoPlaceMarker.isChecked());
+        newPreference.setMapDetailCenterMe(defaultDetailCenterMe.isChecked());
+        try {
+            if (defaultRememberMe.isChecked()) {
+
+                User user = db.getUserDAO().getById(userID);
+                newPreference.setPassword(user.getPassword());
+                newPreference.setUsername(username);
+                newPreference.setRememberMe(true);
+            } else {
+                newPreference.setRememberMe(false);
+            }
+
+            db.getPreferenceDAO().update(newPreference);
+            Snackbar.make(view, R.string.settingsSaved, BaseTransientBottomBar.LENGTH_LONG).show();
+        }  catch (SQLiteConstraintException sce) {
+            Log.i("Prefences - save" , "Algo ha ocurrido malo");
+            Snackbar.make(view, R.string.settingsError, BaseTransientBottomBar.LENGTH_LONG).show();
+        } finally {
+            db.close();
         }
-        adapter.notifyDataSetChanged();
     }
 
     public void back(View view){
@@ -87,7 +100,8 @@ public class ListReserves extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.menuReserves).setVisible(false);
+        settingMenu = menu.findItem(R.id.menuSettings);
+        settingMenu.setVisible(false);
         return true;
     }
 
@@ -127,5 +141,4 @@ public class ListReserves extends AppCompatActivity {
         }
         return false;
     }
-
 }

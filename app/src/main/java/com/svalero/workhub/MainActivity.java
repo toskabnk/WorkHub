@@ -1,14 +1,18 @@
 package com.svalero.workhub;
 
+import static com.svalero.workhub.db.Constants.DATABASE_NAME;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +20,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.svalero.workhub.db.WorkHubDatabase;
+import com.svalero.workhub.domain.Preference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView loggerUser;
     private String username;
     private Long userID;
+    private Preference preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         checkExternalStoragePermission();
+
+        final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+
+        try{
+            preference = db.getPreferenceDAO().getPreference();
+            Log.i("MainActivity" , "onCreate - Preferencias cargadas!");
+        } catch (SQLiteConstraintException sce) {
+            Log.i("MainActivity" , "onCreate - Error");
+            return;
+        }
+
+        if(preference == null){
+            Preference preference = new Preference(0,"","",false, false, false);
+            db.getPreferenceDAO().insert(preference);
+            Log.i("MainActivity" , "onCreate - Preferencias Añadidas!");
+        }
+
+        db.close();
 
         loggerUser = findViewById(R.id.loggerUser);
 
@@ -127,7 +153,10 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = deleteDialog.create();
             dialog.show();
         }else if(item.getItemId() == R.id.menuSettings){
-            Toast.makeText(this, "TODO. Sorry.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, Preferences.class);
+            intent.putExtra("userID", userID);
+            intent.putExtra("username", username);
+            startActivity(intent);
         }
         return false;
     }

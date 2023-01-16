@@ -72,5 +72,12 @@
     <string name="mainMenuSettings">Opciones</string>
     <string name="mainMenuLogout">Cerrar Sesion</string>
     <string name="gpsMe">Yo</string>
+    <string name="preferences1">Recordarme</string>
+    <string name="preferences2">Colocar marcador automatico</string>
+    <string name="preferences3">Centrar mapa en mi</string>
+    <string name="settingsSaved">Preferencias guardadas!</string>
+    <string name="settingsError">Error guardando las preferencias!</string>
+    <string name="autoLogin">Autologin correcto!</string>
+    <string name="autoLoginError">Error al iniciar sesion automaticamente</string>
     <string name="a"></string>
 </resources>

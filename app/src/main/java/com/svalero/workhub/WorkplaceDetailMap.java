@@ -1,10 +1,14 @@
 package com.svalero.workhub;
 
+import static com.svalero.workhub.db.Constants.DATABASE_NAME;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +26,8 @@ import com.mapbox.maps.plugin.annotation.AnnotationPluginImplKt;
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager;
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManagerKt;
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions;
+import com.svalero.workhub.db.WorkHubDatabase;
+import com.svalero.workhub.domain.Preference;
 import com.svalero.workhub.domain.WorkPlace;
 
 public class WorkplaceDetailMap extends AppCompatActivity implements Style.OnStyleLoaded {
@@ -34,12 +40,23 @@ public class WorkplaceDetailMap extends AppCompatActivity implements Style.OnSty
     private Long userID;
     private WorkPlace workplace;
     private FusedLocationProviderClient fusedLocationClient;
+    private Preference preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workplace_detail_map);
+
+        final WorkHubDatabase db = Room.databaseBuilder(this, WorkHubDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+
+        try{
+            preference = db.getPreferenceDAO().getPreference();
+        } catch (SQLiteConstraintException sce) {
+            Log.i("Login" , "onCreate - Error");
+        } finally {
+            db.close();
+        }
 
         //Conseguir usuario logueado
         Intent intentFrom = getIntent();
@@ -105,6 +122,10 @@ public class WorkplaceDetailMap extends AppCompatActivity implements Style.OnSty
                         Log.i("gps: ", String.valueOf(location.getLongitude()));
                         Log.i("gps: ", String.valueOf(location.getLatitude()));
                         Log.i("gps: ", String.valueOf(location));
+
+                        if(preference.isMapDetailCenterMe()){
+                            setCameraPosition(gpsLatitude, gosLongitude);
+                        }
 
                         addMarker(gpsLatitude, gosLongitude, getString(R.string.gpsMe), R.mipmap.blue_marker_icons_foreground);
 
